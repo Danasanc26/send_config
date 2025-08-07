@@ -2,21 +2,38 @@ version: "3.9"
 
 services:
   send_config_api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: send_config_api
-    # Variables de entorno (NO incluyas .env en la imagen)
-    env_file:
-      - .env
+
+    # ───────── Variables ─────────
+    env_file: .env
+    environment:
+      - APP_PORT=${APP_PORT}
+
+    # ───────── Puertos ───────────
     ports:
-      - "8080:8080"           # host:container
+      - "${HOST_PORT:-8080}:${APP_PORT}"
+
+    # ───────── Persistencia ──────
     volumes:
-      - ./logs:/app/logs      # persistir logs en host
+      - ./logs:/app/logs
+
+    # ───────── Red a usar ────────
+    networks:
+      - omarsa-docker         # ← aquí la asociamos
+
     restart: unless-stopped
+
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://localhost:${APP_PORT}/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 15s
+
+# ──────────────────────────────────────────
+# Redes
+# ──────────────────────────────────────────
+networks:
+  omarsa-docker:
+    external: true            # ← declara que ya existe fuera de compose

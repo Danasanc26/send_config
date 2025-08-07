@@ -24,8 +24,11 @@ COPY . .
 # Carpeta de logs (se montará como volumen en compose)
 RUN mkdir -p /app/logs
 
-# ---------- 4) Exponer puerto y comando ----------
-EXPOSE 8080
+# ---------- 4) Puerto y comando ----------
+ARG APP_PORT=8080          # <─ valor por defecto
+ENV APP_PORT=${APP_PORT}
 
-# Un solo worker por conexión MQTT (réplicas se escalan con compose/k8s)
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+EXPOSE ${APP_PORT}
+
+# Lanzamos uvicorn leyendo la var
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $APP_PORT"]
