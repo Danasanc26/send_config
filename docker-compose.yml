@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8000:8000"           # host:container
+      - "8080:8080"           # host:container
     volumes:
       - ./logs:/app/logs      # persistir logs en host
     restart: unless-stopped
