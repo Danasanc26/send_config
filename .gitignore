@@ -1,0 +1,22 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Logs
+logs/
+*.log
+
+# Archivos de entorno / credenciales
+.env
+
+# Docker artefacts
+*.pid
+
+# IDE / sistema
+.vscode/
+.idea/
+.DS_Store

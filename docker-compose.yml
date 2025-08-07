@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  send_config_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: send_config_api
+    # Variables de entorno (NO incluyas .env en la imagen)
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"           # host:container
+    volumes:
+      - ./logs:/app/logs      # persistir logs en host
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s

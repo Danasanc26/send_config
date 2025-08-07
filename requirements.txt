@@ -1,0 +1,20 @@
+# --- Core API ---
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.23,<1.0
+
+# --- Validación (Pydantic v2) ---
+pydantic>=2.5,<3.0
+
+# --- MQTT (manteniendo el import "from asyncio_mqtt import Client") ---
+# Nota: la librería fue renombrada a "aiomqtt" a partir de la v1.0.
+# Si migras, reemplaza esta dependencia por "aiomqtt>=1.0" y cambia los imports.
+asyncio-mqtt>=0.16,<1.0
+
+# --- MongoDB asíncrono ---
+motor>=3.3,<4.0
+
+# --- Variables de entorno ---
+python-dotenv>=1.0,<2.0
+
+# --- Zona horaria (útil en contenedores/Windows) ---
+tzdata>=2024.1
